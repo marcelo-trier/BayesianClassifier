@@ -38,8 +38,8 @@ public class TelaInterna extends JInternalFrame {
 		panel.mostrePontos__OLD( qtde, lista, aClasse );
 	}
 	
-	public void registraPonto( int qtde, List<Point> lista, Classe aClasse ) {
-		panel.pegaPonto( qtde, lista, aClasse );
+	public void registraPonto( Classe aClasse ) {
+		panel.pegaPonto( aClasse );
 	}
 	
 	public TelaInterna(BufferedImage img ) {

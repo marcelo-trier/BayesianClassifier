@@ -8,6 +8,7 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -18,7 +19,7 @@ public class ImagePanel extends JPanel implements MouseListener {
 
 	BufferedImage imagem = null;
 	int numeroPontos = 0;
-	List<Point> umaLista;
+	List<Point> umaLista = new ArrayList<Point>();
 	//Color umaCor = Color.WHITE;
 	Classe aClasse = Classe.MONTANHA;
 	boolean adicionaPontos = false;
@@ -29,6 +30,7 @@ public class ImagePanel extends JPanel implements MouseListener {
 		Graphics g = imagem.createGraphics();
 		g.drawImage( img, 0, 0, null );
 		g.dispose();
+		numeroPontos = 0;
 	}
 	
 	public ImagePanel( BufferedImage img ) {
@@ -53,14 +55,11 @@ public class ImagePanel extends JPanel implements MouseListener {
 		}
 	}
 	
-	public void pegaPonto( int qtde, List<Point> l, Classe c ) {
+	public void pegaPonto( Classe c ) {
 		this.setCursor(Cursor.getPredefinedCursor( Cursor.CROSSHAIR_CURSOR ) );
-		numeroPontos = qtde;
-		umaLista = l;
+		numeroPontos = Classe.NUMERO_PONTOS;
 		umaLista.clear();
 		aClasse = c;
-		//umaCor = Classe.Cores[ aClasse.ordinal() ];
-		//umaCor = c;
 		this.addMouseListener( this );
 	}
 	

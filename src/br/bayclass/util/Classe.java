@@ -7,6 +7,8 @@ import java.util.List;
 public enum Classe {
 	MONTANHA, CEU, MAR, AREIA;
 
+	public static final int NUMERO_PONTOS = 30;
+	
 	public final static Color Cores[] = { Color.ORANGE, Color.BLUE,
 			Color.GREEN, Color.RED };
 
