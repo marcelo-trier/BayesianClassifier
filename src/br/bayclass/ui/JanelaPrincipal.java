@@ -30,6 +30,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.border.EmptyBorder;
 
+import br.bayclass.main.ClassificadorBayesiano;
 import br.bayclass.util.Classe;
 
 public class JanelaPrincipal extends JFrame {
@@ -38,7 +39,41 @@ public class JanelaPrincipal extends JFrame {
 	private ButtonGroup group;
 
 	public void clickBayesUmPraTodos(Classe umaC) {
+		ClassificadorBayesiano cb = new ClassificadorBayesiano();
+		//cb.setInfo( numClasses, numAtrib );
+		cb.setClassNumber( 2 );
+		//cb.setNumeroAprendizagem( Classe.NUMERO_PONTOS );
+		for( Classe c : Classe.values() ) {
+			int classNumber = 1;
+			int numeroLinhas = 10;
+			if( c == umaC ) {
+				classNumber = 0;
+				numeroLinhas = 30;
+			}
+			int[] pix = { 0, 0, 0, 0 };
+			for( int i=0; i<numeroLinhas; i++ ) {
+				int x = Classe.PONTOSS_V3[ umaC.ordinal() ][ i ][ 0 ];
+				int y = Classe.PONTOSS_V3[ umaC.ordinal() ][ i ][ 1 ];
+				pix = rastImg.getPixel( x, y, pix );
+				hsb[] = Color.RGBtoHSB( pix[0], pix[1], pix[2], null );
+				cb.addTupla( classNumber, hsb );
+			}
+		}
+		cb.learn(); // aqui gera media e sigma
 
+		int[] hsb = { 0, 0, 0, 0 };
+		for( int x=0; x<w; x++ ) {
+			for( int y=0; y<h; y++ ) {
+				getRgb( x, y, pix );
+				hsb = Color.RGBtoHSB( pix[0], pix[1], pix[2], hsb );
+				int classeBayes = cb.preveja( hsb ); // aqui retorna 0 ou 1... ou o numero da classe!!
+				if( classeBayes == 0 ) {
+					pinta preto
+				}
+				else
+					pinta( Classe.Cores[ umaC.ordinal() ] );
+			}
+		}
 	}
 
 	public void clickTeste() {
@@ -131,7 +166,7 @@ public class JanelaPrincipal extends JFrame {
 					clickOnLoad();
 				} catch (Exception ex) {
 
-				}
+				}float tup.
 			}
 		});
 		mnFile.add(mntmOpen);
@@ -168,7 +203,7 @@ public class JanelaPrincipal extends JFrame {
 		JMenuItem mntmMostrePontos = new JMenuItem("Mostre Pontos");
 		mnImagens.add(mntmMostrePontos);
 		mntmMostrePontos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(Actionfloat tup.Event e) {
 				clickMostrePontos();
 			}
 		});
