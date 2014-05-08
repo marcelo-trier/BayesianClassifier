@@ -19,7 +19,7 @@ public class ImgUtil {
 					for (int x = 0; x < w; x++) {
 						pix = raster.getPixel(x, y, pix);
 						int soma = pix[0] + pix[1] + pix[2];
-						if (soma > 5)
+						if (soma > 5) // ruídos (valores muito baixos) serão desconsiderados 
 							outRaster.setPixel(x, y, pix);
 					}
 				}

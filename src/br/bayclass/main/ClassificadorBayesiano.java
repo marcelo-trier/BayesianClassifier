@@ -6,6 +6,7 @@ import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
 
 import br.bayclass.util.Classe;
+import br.bayclass.util.ConversorCores;
 
 public class ClassificadorBayesiano {
 
@@ -43,9 +44,8 @@ public class ClassificadorBayesiano {
 				int x = arr[i][0];
 				int y = arr[i][1];
 				pix = rastImg.getPixel(x, y, pix);
-				float hsb[] = Classe.convertRGBtoHSL( pix, null );
-				//float hsb[] = Color.RGBtoHSB(pix[0], pix[1], pix[2], null);
-				asClasses[classNumber].addTupla(hsb);
+				float umaCor[] = ConversorCores.rgb2hsl( pix, null );
+				asClasses[classNumber].addTupla(umaCor);
 			}
 		}
 	}
@@ -63,22 +63,21 @@ public class ClassificadorBayesiano {
 		WritableRaster rastOut = out.getRaster();
 		float resultados[] = new float[asClasses.length];
 		int pix[] = { 0, 0, 0, 0 };
-		float hsb[] = { 0, 0, 0, 0 };
+		float umaCor[] = { 0, 0, 0, 0 };
 		for (int y = 0; y < h; y++)
 			for (int x = 0; x < w; x++) {
 				pix = rastImg.getPixel(x, y, pix);
-				hsb = Classe.convertRGBtoHSL( pix, hsb );
-				//hsb = Color.RGBtoHSB(pix[0], pix[1], pix[2], hsb);
+				umaCor = ConversorCores.rgb2hsl( pix, umaCor );
 				for (int i = 0; i < asClasses.length; i++) {
-					resultados[i] = asClasses[i].getProbabilidade(hsb);
+					resultados[i] = asClasses[i].getProbabilidade( umaCor );
 				}
 
-				int umaCor[] = asClasses[0].corPixel;
+				int corPinta[] = asClasses[0].corPixel;
 
 				if (resultados[0] < resultados[1])
-					umaCor = asClasses[1].corPixel;
+					corPinta = asClasses[1].corPixel;
 
-				rastOut.setPixel(x, y, umaCor );
+				rastOut.setPixel(x, y, corPinta );
 			}
 	}
 
